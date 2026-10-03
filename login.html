@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <div class="auth-wrapper">
+        
+        <!-- Hackathon Context Banner -->
+        <div class="alert-banner">
+          <span>ℹ️</span>
+          <span><strong>Hackathon Demo Auth:</strong> Uses local browser storage. No real backend required.</span>
+        </div>
+
+        <!-- Auth Tabs (Login vs Register) -->
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="tab-login-btn">Log In</button>
+          <button class="auth-tab-btn" id="tab-register-btn">Create Account</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="e.g., student@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+            Sign In to StudySphere
+          </button>
+        </form>
+
+        <!-- REGISTER FORM (Hidden by default) -->
+        <form id="register-form" style="display: none;">
+          <div class="form-group">
+            <label for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g., Alex Johnson" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-email">College Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="e.g., alex@college.edu" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Create Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-role">Account Type (Demo)</label>
+            <select id="reg-role" class="form-control">
+              <option value="student">Student Account</option>
+              <option value="admin">Administrator / Faculty</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+            Register Demo Account
+          </button>
+        </form>
+
+        <!-- QUICK FILL SHORTCUTS -->
+        <div class="demo-credentials-box">
+          <h5>⚡ Demo Credentials (1-Click Fill)</h5>
+          <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">
+            Click to auto-populate credentials for instant hackathon demonstration:
+          </p>
+          <button type="button" class="quick-fill-btn" id="btn-fill-student">
+            🎓 Student (student@example.com)
+          </button>
+          <button type="button" class="quick-fill-btn" id="btn-fill-admin">
+            🛡️ Admin (admin@studysphere.edu)
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Client-Side Session Demonstration</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Tab switching
+    const tabLoginBtn = document.getElementById('tab-login-btn');
+    const tabRegBtn = document.getElementById('tab-register-btn');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    tabLoginBtn.addEventListener('click', () => {
+      tabLoginBtn.classList.add('active');
+      tabRegBtn.classList.remove('active');
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+    });
+
+    tabRegBtn.addEventListener('click', () => {
+      tabRegBtn.classList.add('active');
+      tabLoginBtn.classList.remove('active');
+      registerForm.style.display = 'block';
+      loginForm.style.display = 'none';
+    });
+
+    // 1-Click Fill buttons
+    document.getElementById('btn-fill-student').addEventListener('click', () => {
+      tabLoginBtn.click();
+      document.getElementById('login-email').value = 'student@example.com';
+      document.getElementById('login-password').value = 'student123';
+      showToast('Populated Demo Student credentials', 'info');
+    });
+
+    document.getElementById('btn-fill-admin').addEventListener('click', () => {
+      tabLoginBtn.click();
+      document.getElementById('login-email').value = 'admin@studysphere.edu';
+      document.getElementById('login-password').value = 'admin123';
+      showToast('Populated Demo Admin credentials', 'info');
+    });
+
+    // Handle Login submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pass = document.getElementById('login-password').value;
+
+      const res = loginUser(email, pass);
+      if (res.success) {
+        showToast(res.message, 'success');
+        setTimeout(() => {
+          if (res.user.role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        }, 700);
+      } else {
+        showToast(res.message, 'error');
+      }
+    });
+
+    // Handle Register submission
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const pass = document.getElementById('reg-password').value;
+      const role = document.getElementById('reg-role').value;
+
+      const res = registerUser(name, email, pass, role);
+      if (res.success) {
+        showToast(res.message, 'success');
+        setTimeout(() => {
+          if (role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        }, 800);
+      } else {
+        showToast(res.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

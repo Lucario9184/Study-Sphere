@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="admin.html" class="admin-link active">🛡️ Admin</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Admin Header -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.75rem 2rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="font-size: 0.8rem; font-weight: 700; background: #f5f3ff; color: #7c3aed; padding: 0.25rem 0.6rem; border-radius: var(--radius-full); text-transform: uppercase;">
+            ADMINISTRATOR MODE
+          </span>
+          <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--secondary-color); margin-top: 0.35rem;">
+            Faculty & Resource Admin Console
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">
+            Manage college curriculum study materials, upload handouts, edit notes, and monitor student engagement.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" id="btn-open-add-modal">
+            ➕ Add New Resource
+          </button>
+          <a href="resources.html" class="btn btn-secondary">
+            View Public Catalog &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="stats-cards-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #e0f2fe; color: #0284c7;">📚</div>
+          <div class="stat-card-info">
+            <h4 id="admin-total-resources">0</h4>
+            <p>Total Resources</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #fef3c7; color: #d97706;">⭐</div>
+          <div class="stat-card-info">
+            <h4 id="admin-total-ratings">0</h4>
+            <p>Student Ratings</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #dcfce7; color: #16a34a;">👁️</div>
+          <div class="stat-card-info">
+            <h4 id="admin-total-views">0</h4>
+            <p>Total Material Views</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #ede9fe; color: #7c3aed;">✅</div>
+          <div class="stat-card-info">
+            <h4 id="admin-total-completed">0</h4>
+            <p>Student Completions</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource Management Table Box -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--secondary-color);">All Study Resources</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time localStorage resources registry</p>
+          </div>
+          <div>
+            <input type="text" id="admin-table-search" placeholder="Filter resources table..." class="form-control" style="width: 260px; font-size: 0.85rem; padding: 0.45rem 0.75rem;">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Type</th>
+                <th>Rating</th>
+                <th>Views</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-resources-tbody">
+              <!-- Dynamically populated by js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ADD RESOURCE MODAL -->
+  <div class="modal-overlay" id="modal-add-resource">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Study Resource</h3>
+        <button class="modal-close-btn modal-close-trigger" aria-label="Close modal">&times;</button>
+      </div>
+      
+      <form id="form-add-resource">
+        <div class="modal-body">
+          
+          <div class="alert-banner" style="margin-bottom: 1rem; padding: 0.6rem 0.8rem; font-size: 0.8rem;">
+            <span>ℹ️</span>
+            <span><strong>Hackathon Demo Notice:</strong> Uploaded materials are stored in browser localStorage for demonstration purposes.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="add-title">Resource Title *</label>
+            <input type="text" id="add-title" class="form-control" placeholder="e.g., Laplace Transforms Handout" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="add-subject">Subject *</label>
+              <select id="add-subject" class="form-control" required>
+                <option value="Engineering Physics">Engineering Physics</option>
+                <option value="Engineering Mathematics">Engineering Mathematics</option>
+                <option value="Programming / C">Programming / C</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Engineering Chemistry">Engineering Chemistry</option>
+                <option value="Other">Other / General</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="add-type">Type *</label>
+              <select id="add-type" class="form-control" required>
+                <option value="PDF">📄 PDF Notes</option>
+                <option value="Lecture">🎥 Video Lecture</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="add-unit">Unit / Chapter *</label>
+            <input type="text" id="add-unit" class="form-control" placeholder="e.g., Unit 4: Transforms" required>
+          </div>
+
+          <div class="form-group">
+            <label for="add-description">Short Description *</label>
+            <textarea id="add-description" class="form-control" rows="3" placeholder="Summary of topics covered, derivations, and practice problems..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="add-tags">Search Tags (comma separated)</label>
+            <input type="text" id="add-tags" class="form-control" placeholder="e.g., laplace, calculus, formulas, math">
+          </div>
+
+          <div class="form-group">
+            <label for="add-link">Resource URL / Video Embed Link</label>
+            <input type="text" id="add-link" class="form-control" placeholder="e.g., files/sample.pdf or YouTube embed URL">
+          </div>
+
+          <div class="form-group">
+            <label for="add-file">Or Select Local PDF File (Demo Upload)</label>
+            <input type="file" id="add-file" class="form-control" accept=".pdf">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="add-date">Publication Date</label>
+            <input type="date" id="add-date" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-close-trigger">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Resource</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT RESOURCE MODAL -->
+  <div class="modal-overlay" id="modal-edit-resource">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Study Resource</h3>
+        <button class="modal-close-btn modal-close-trigger" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="form-edit-resource">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-title">Resource Title</label>
+            <input type="text" id="edit-title" class="form-control" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="edit-subject">Subject</label>
+              <select id="edit-subject" class="form-control" required>
+                <option value="Engineering Physics">Engineering Physics</option>
+                <option value="Engineering Mathematics">Engineering Mathematics</option>
+                <option value="Programming / C">Programming / C</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Engineering Chemistry">Engineering Chemistry</option>
+                <option value="Other">Other / General</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-type">Type</label>
+              <select id="edit-type" class="form-control" required>
+                <option value="PDF">📄 PDF Notes</option>
+                <option value="Lecture">🎥 Video Lecture</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-unit">Unit / Chapter</label>
+            <input type="text" id="edit-unit" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-description">Description</label>
+            <textarea id="edit-description" class="form-control" rows="3" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-tags">Tags (comma separated)</label>
+            <input type="text" id="edit-tags" class="form-control">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="edit-link">Resource Link / File Path</label>
+            <input type="text" id="edit-link" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-close-trigger">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Resource</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div class="modal-overlay" id="modal-delete-confirm">
+    <div class="modal-content" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3>Confirm Deletion</h3>
+        <button class="modal-close-btn modal-close-trigger" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-main); margin-bottom: 0.75rem;">
+          Are you sure you want to delete this resource?
+        </p>
+        <p style="font-weight: 700; color: var(--danger-color); background: #fee2e2; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);" id="delete-resource-title-confirm">
+          Resource Title
+        </p>
+        <p style="font-size: 0.825rem; color: var(--text-muted); margin-top: 0.75rem;">
+          This action will immediately remove the resource from localStorage and update all student catalogs.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary modal-close-trigger">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-delete">Delete Resource</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Demo Administrator Control Panel</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/ratings.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

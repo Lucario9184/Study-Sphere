@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study AI Assistant — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html" class="active">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Page Header -->
+      <div class="section-header" style="margin-bottom: 1.5rem;">
+        <div>
+          <h1 class="section-title">Study AI Assistant 🤖</h1>
+          <p class="section-subtitle">Ask quick conceptual questions on physics, mathematics, C programming, and electrical engineering.</p>
+        </div>
+        <div>
+          <button class="btn btn-secondary btn-sm" id="btn-clear-chat">
+            🗑️ Clear Chat
+          </button>
+        </div>
+      </div>
+
+      <!-- Layout: Chat Window (2 cols) & Help Info (1 col) -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+        
+        <!-- Chat Interface Box -->
+        <div class="chat-window">
+          
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-bot-info">
+              <div class="chat-bot-avatar">🤖</div>
+              <div>
+                <div class="chat-bot-title">StudySphere Assistant</div>
+                <div class="chat-bot-status">Curriculum Knowledge Base Active</div>
+              </div>
+            </div>
+            <span style="font-size: 0.75rem; background: var(--bg-subtle); padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-muted); border: 1px solid var(--border-color);">
+              Offline Demo Mode
+            </span>
+          </div>
+
+          <!-- Messages Scroll Area -->
+          <div class="chat-messages" id="chat-messages">
+            <!-- Initial Bot Welcome Bubble -->
+            <div class="chat-message assistant">
+              <div class="chat-avatar-small bot">🤖</div>
+              <div class="chat-bubble">
+                Hello! I am your <strong>StudySphere Academic Assistant</strong>.<br><br>
+                I can help you review key first-year college concepts such as the <em>photoelectric effect, matrices & eigenvalues, Kirchhoff's circuit laws, C programming syntax, and thermodynamics</em>.<br><br>
+                Try asking a question below or click any of the suggestion chips!
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Topic Suggestion Chips -->
+          <div class="chat-suggestions">
+            <button class="suggestion-chip" data-question="What is the photoelectric effect?">
+              ⚛️ Photoelectric Effect
+            </button>
+            <button class="suggestion-chip" data-question="Explain Kirchhoff's laws">
+              ⚡ Kirchhoff's Laws
+            </button>
+            <button class="suggestion-chip" data-question="How do matrices and eigenvalues work?">
+              📐 Matrices & Eigenvalues
+            </button>
+            <button class="suggestion-chip" data-question="Explain C programming arrays and loops">
+              💻 C Arrays & Loops
+            </button>
+            <button class="suggestion-chip" data-question="What is Thevenin's theorem?">
+              🔌 Thevenin Theorem
+            </button>
+            <button class="suggestion-chip" data-question="What is Gibbs free energy?">
+              🧪 Thermodynamics
+            </button>
+          </div>
+
+          <!-- Input Bar -->
+          <div class="chat-input-bar">
+            <input type="text" id="chat-input" placeholder="Type your academic query (e.g. 'What is the photoelectric effect?')..." autocomplete="off">
+            <button class="btn btn-primary" id="chat-send-btn">Send &rarr;</button>
+          </div>
+
+        </div>
+
+        <!-- Sidebar: Assistant Capabilities & Hackathon Note -->
+        <div>
+          <div class="sidebar-box">
+            <h4>💡 How Study AI Works</h4>
+            <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+              This assistant demonstrates client-side natural language concept retrieval built entirely with <strong>Vanilla JavaScript</strong>.
+            </p>
+            <div style="font-size: 0.85rem; border-left: 3px solid var(--primary-color); padding-left: 0.75rem; margin-bottom: 1.25rem;">
+              <strong>100% Reliable for Demo:</strong> Operates entirely in the browser with zero external API latency, rate limits, or backend costs.
+            </div>
+
+            <h5 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary-color);">Supported Topics:</h5>
+            <ul style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem;">
+              <li>Photoelectric effect & Planck's theory</li>
+              <li>Matrices, rank & linear systems</li>
+              <li>Eigenvalues, eigenvectors & Cayley-Hamilton</li>
+              <li>Kirchhoff's Current & Voltage Laws (KCL/KVL)</li>
+              <li>Ohm's Law & Circuit analysis</li>
+              <li>C Language: syntax, printf/scanf, data types</li>
+              <li>Arrays, functions, recursion & loops</li>
+              <li>First-order differential equations</li>
+              <li>Thevenin's & Norton's theorems</li>
+              <li>Chemical thermodynamics & Gibbs phase rule</li>
+            </ul>
+          </div>
+
+          <div class="sidebar-box" style="margin-top: 1.5rem; background: var(--bg-subtle);">
+            <h5 style="font-size: 0.875rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--secondary-color);">
+              🔗 Linked to Resources
+            </h5>
+            <p style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.5;">
+              Whenever you ask about a topic, Study AI references the relevant study notes or lecture videos available in StudySphere.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Offline Academic Assistant Demo</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/study-ai.js"></script>
+</body>
+</html>

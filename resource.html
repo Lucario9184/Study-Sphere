@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Viewer — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html" class="active">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewer Content -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Breadcrumbs navigation -->
+      <nav style="margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--text-muted);" aria-label="Breadcrumb">
+        <a href="index.html">Home</a> &gt; 
+        <a href="resources.html">Resources</a> &gt; 
+        <span id="breadcrumb-subject">Subject</span> &gt; 
+        <span id="breadcrumb-title" style="color: var(--text-main); font-weight: 600;">Resource</span>
+      </nav>
+
+      <!-- Not Found Container -->
+      <div id="resource-not-found" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">⚠️</div>
+        <h3>Resource Not Found</h3>
+        <p>The requested study resource could not be found or has been removed. Please browse our resources catalog.</p>
+        <a href="resources.html" class="btn btn-primary">Return to Resources</a>
+      </div>
+
+      <!-- Main Viewer Layout -->
+      <div class="viewer-layout" id="viewer-container">
+        
+        <!-- Left: Embed Media & Notes Details -->
+        <div class="viewer-main">
+          
+          <!-- Media Container (PDF iframe or Video Player) -->
+          <div id="media-embed-container" class="viewer-frame-container">
+            <!-- Dynamically injected: PDF iframe or YouTube embed -->
+          </div>
+
+          <div class="viewer-details">
+            <div class="viewer-meta-row">
+              <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                <span id="res-badge-type" class="card-badge badge-pdf">📄 PDF Notes</span>
+                <span id="res-badge-subject" class="card-badge badge-subject">Engineering Physics</span>
+                <span id="res-badge-unit" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Unit 1</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);" id="res-date">
+                Published: Sep 2026
+              </div>
+            </div>
+
+            <h1 class="viewer-title" id="res-title">Loading Resource...</h1>
+            <p class="viewer-description" id="res-description"></p>
+
+            <!-- Tags -->
+            <div style="margin-bottom: 1.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-right: 0.5rem;">Tags:</span>
+              <span id="res-tags-container" style="display: inline-flex; gap: 0.35rem; flex-wrap: wrap;"></span>
+            </div>
+
+            <!-- Action Controls (Bookmark & Complete) -->
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
+              <button class="btn btn-secondary" id="btn-toggle-bookmark">
+                <span id="bookmark-btn-icon">☆</span>
+                <span id="bookmark-btn-text">Bookmark Resource</span>
+              </button>
+
+              <button class="btn btn-primary" id="btn-toggle-progress">
+                <span id="progress-btn-icon">✓</span>
+                <span id="progress-btn-text">Mark as Read</span>
+              </button>
+
+              <a href="#" target="_blank" class="btn btn-outline" id="btn-direct-link">
+                ↗ Open Original Link / File
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Rating, Metadata, and Related Materials -->
+        <div class="viewer-sidebar">
+          
+          <!-- Interactive Rating Card -->
+          <div class="sidebar-box rating-widget">
+            <h4>Rate this Resource</h4>
+            <div class="rating-widget-stars" id="interactive-stars">
+              <span class="star-interactive" data-val="1">★</span>
+              <span class="star-interactive" data-val="2">★</span>
+              <span class="star-interactive" data-val="3">★</span>
+              <span class="star-interactive" data-val="4">★</span>
+              <span class="star-interactive" data-val="5">★</span>
+            </div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.25rem;">
+              ⭐ <span id="rating-avg-display">4.8</span> / 5.0
+            </div>
+            <div class="rating-status-text" id="rating-count-display">
+              38 ratings from students
+            </div>
+            <div id="user-rating-feedback" style="font-size: 0.8rem; color: var(--primary-color); font-weight: 600; margin-top: 0.5rem; min-height: 1.2rem;"></div>
+          </div>
+
+          <!-- Quick Resource Metadata Stats -->
+          <div class="sidebar-box">
+            <h4>Resource Overview</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Views:</span>
+                <span style="font-weight: 600;" id="stat-views-count">142</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Status:</span>
+                <span style="font-weight: 600; color: var(--success-color);" id="stat-progress-status">Not completed</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Format:</span>
+                <span style="font-weight: 600;" id="stat-format-type">PDF Document</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related Resources -->
+          <div class="sidebar-box">
+            <h4>Related Resources</h4>
+            <div id="related-resources-list" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- Injected by JavaScript -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Built for First-Year College Hackathon</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/ratings.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script src="js/progress.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const resourceId = getQueryParam('id') || 'res_phy_1';
+      const resource = getResourceById(resourceId);
+
+      const notFoundContainer = document.getElementById('resource-not-found');
+      const viewerContainer = document.getElementById('viewer-container');
+
+      if (!resource) {
+        if (notFoundContainer) notFoundContainer.style.display = 'block';
+        if (viewerContainer) viewerContainer.style.display = 'none';
+        return;
+      }
+
+      // Record view count and add to recently viewed (max 5)
+      trackResourceView(resource.id);
+
+      // Populate Breadcrumbs
+      document.getElementById('breadcrumb-subject').textContent = resource.subject;
+      document.getElementById('breadcrumb-title').textContent = resource.title;
+
+      // Populate Metadata
+      document.getElementById('res-title').textContent = resource.title;
+      document.getElementById('res-description').textContent = resource.description;
+      document.getElementById('res-badge-subject').textContent = resource.subject;
+      document.getElementById('res-badge-unit').textContent = resource.unit;
+      document.getElementById('res-date').textContent = `Added: ${resource.date}`;
+      document.getElementById('stat-views-count').textContent = resource.views;
+      document.getElementById('stat-format-type').textContent = resource.type === 'PDF' ? 'PDF Document' : 'Video Lecture';
+
+      // Type Badge
+      const typeBadge = document.getElementById('res-badge-type');
+      if (resource.type.toLowerCase() === 'pdf') {
+        typeBadge.className = 'card-badge badge-pdf';
+        typeBadge.textContent = '📄 PDF Notes';
+      } else {
+        typeBadge.className = 'card-badge badge-lecture';
+        typeBadge.textContent = '🎥 Video Lecture';
+      }
+
+      // Render Tags
+      const tagsContainer = document.getElementById('res-tags-container');
+      if (resource.tags && Array.isArray(resource.tags)) {
+        tagsContainer.innerHTML = resource.tags.map(t => 
+          `<a href="resources.html?search=${encodeURIComponent(t)}" class="filter-chip" style="font-size:0.75rem;">#${escapeHtml(t)}</a>`
+        ).join('');
+      }
+
+      // Embed Media: PDF iframe vs Video iframe
+      const mediaContainer = document.getElementById('media-embed-container');
+      if (resource.type.toLowerCase() === 'pdf') {
+        mediaContainer.className = 'pdf-frame-container';
+        mediaContainer.innerHTML = `
+          <iframe src="${escapeHtml(resource.link)}" title="${escapeHtml(resource.title)}" loading="lazy">
+            <p>Your browser does not support iframes. <a href="${escapeHtml(resource.link)}" target="_blank">Download PDF</a></p>
+          </iframe>
+        `;
+      } else {
+        mediaContainer.className = 'video-responsive';
+        mediaContainer.innerHTML = `
+          <iframe src="${escapeHtml(resource.link)}" title="${escapeHtml(resource.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        `;
+      }
+
+      // Direct Link Button
+      const directLinkBtn = document.getElementById('btn-direct-link');
+      directLinkBtn.href = resource.link;
+      directLinkBtn.textContent = resource.type === 'PDF' ? '↗ Open / Download PDF' : '↗ Open Video on YouTube';
+
+      // --- BOOKMARK BUTTON LOGIC ---
+      const bookmarkBtn = document.getElementById('btn-toggle-bookmark');
+      const bookmarkIcon = document.getElementById('bookmark-btn-icon');
+      const bookmarkText = document.getElementById('bookmark-btn-text');
+
+      function updateBookmarkUI() {
+        const bookmarked = isResourceBookmarked(resource.id);
+        bookmarkIcon.textContent = bookmarked ? '★' : '☆';
+        bookmarkText.textContent = bookmarked ? 'Bookmarked' : 'Bookmark Resource';
+        bookmarkBtn.classList.toggle('btn-secondary', !bookmarked);
+        bookmarkBtn.classList.toggle('btn-outline', bookmarked);
+      }
+      updateBookmarkUI();
+
+      bookmarkBtn.addEventListener('click', () => {
+        toggleBookmark(resource.id, () => {
+          updateBookmarkUI();
+        });
+      });
+
+      // --- PROGRESS COMPLETION LOGIC ---
+      const progressBtn = document.getElementById('btn-toggle-progress');
+      const progressText = document.getElementById('progress-btn-text');
+      const progressStatus = document.getElementById('stat-progress-status');
+
+      function updateProgressUI() {
+        const completed = isResourceCompleted(resource.id);
+        const actionLabel = resource.type.toLowerCase() === 'pdf' ? 'Read' : 'Completed';
+
+        if (completed) {
+          progressText.textContent = `Completed ✓`;
+          progressBtn.classList.remove('btn-primary');
+          progressBtn.classList.add('btn-secondary');
+          progressStatus.textContent = 'Completed ✓';
+          progressStatus.style.color = 'var(--success-color)';
+        } else {
+          progressText.textContent = `Mark as ${actionLabel}`;
+          progressBtn.classList.remove('btn-secondary');
+          progressBtn.classList.add('btn-primary');
+          progressStatus.textContent = 'Not completed';
+          progressStatus.style.color = 'var(--text-muted)';
+        }
+      }
+      updateProgressUI();
+
+      progressBtn.addEventListener('click', () => {
+        toggleResourceProgress(resource.id, resource.type);
+        updateProgressUI();
+      });
+
+      // --- RATING WIDGET LOGIC ---
+      const avgDisplay = document.getElementById('rating-avg-display');
+      const countDisplay = document.getElementById('rating-count-display');
+      const feedbackDisplay = document.getElementById('user-rating-feedback');
+      const starsContainer = document.getElementById('interactive-stars');
+
+      function updateRatingDisplays(avg, count, userScore) {
+        avgDisplay.textContent = (avg || 0).toFixed(1);
+        countDisplay.textContent = `${count || 0} ${count === 1 ? 'rating' : 'ratings'} from students`;
+        if (userScore) {
+          feedbackDisplay.textContent = `Your rating: ${userScore} / 5 stars ⭐`;
+        }
+      }
+
+      const existingUserRating = getUserRating(resource.id);
+      updateRatingDisplays(resource.rating, resource.ratingCount, existingUserRating);
+
+      setupRatingWidget(starsContainer, resource.id, (result) => {
+        updateRatingDisplays(result.newAverage, result.newCount, result.userRating);
+      });
+
+      // --- RELATED RESOURCES ---
+      const relatedContainer = document.getElementById('related-resources-list');
+      const all = getAllResources();
+      const related = all.filter(r => r.subject === resource.subject && r.id !== resource.id).slice(0, 3);
+
+      if (related.length === 0) {
+        relatedContainer.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">No other resources for this subject yet.</p>`;
+      } else {
+        relatedContainer.innerHTML = related.map(rel => `
+          <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.6rem;">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+              ${rel.type === 'PDF' ? '📄 Notes' : '🎥 Lecture'}
+            </div>
+            <a href="resource.html?id=${rel.id}" style="font-weight: 600; font-size: 0.875rem; color: var(--secondary-color); line-height: 1.3; display: block; margin: 0.2rem 0;">
+              ${escapeHtml(rel.title)}
+            </a>
+            <div style="font-size: 0.8rem; color: var(--warning-color);">
+              ⭐ ${(rel.rating || 0).toFixed(1)} <span style="color: var(--text-light);">(${rel.ratingCount || 0})</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
+</body>
+</html>

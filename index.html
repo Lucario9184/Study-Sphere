@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySphere — Learn. Explore. Grow. | Student Study Resources</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <!-- Injected dynamically by js/app.js -->
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tagline">
+        <span>✨</span> Learn. Explore. Grow.
+      </div>
+      <h1 class="hero-title">
+        Your study material, <span class="highlight">all in one place.</span>
+      </h1>
+      <p class="hero-description">
+        Find verified handwritten notes, syllabus-aligned PDF summaries, and curated lecture videos organized specifically for first-year engineering and college students.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="resources.html" class="btn btn-primary btn-lg">Explore Resources</a>
+        <a href="dashboard.html" class="btn btn-secondary btn-lg">Get Started</a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3 id="stat-resources-count">15+</h3>
+          <p>Curated Resources</p>
+        </div>
+        <div class="stat-item">
+          <h3>5+</h3>
+          <p>Core College Subjects</p>
+        </div>
+        <div class="stat-item">
+          <h3>100%</h3>
+          <p>Free & Open Access</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Popular Resources Section -->
+      <section style="margin-bottom: 4rem;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🔥 Popular Resources</h2>
+            <p class="section-subtitle">Most viewed study materials and handouts</p>
+          </div>
+          <a href="resources.html?sort=popular" class="btn btn-secondary btn-sm">View All &rarr;</a>
+        </div>
+        <div class="resource-grid" id="popular-resources-grid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Explore Subjects Section -->
+      <section style="margin-bottom: 4rem;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📚 Explore Subjects</h2>
+            <p class="section-subtitle">Browse notes and lectures tailored by curriculum domain</p>
+          </div>
+          <a href="subjects.html" class="btn btn-secondary btn-sm">All Subjects &rarr;</a>
+        </div>
+
+        <div class="subject-grid">
+          <!-- Physics -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-physics">⚛️</div>
+            <h3 class="subject-name">Engineering Physics</h3>
+            <p class="subject-desc">Quantum mechanics, optics, lasers, wave theory and modern physics formulas.</p>
+            <div class="subject-footer">
+              <span class="subject-count">3 Resources</span>
+              <a href="resources.html?subject=Engineering+Physics" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+
+          <!-- Mathematics -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-math">📐</div>
+            <h3 class="subject-name">Engineering Mathematics</h3>
+            <p class="subject-desc">Matrices, linear algebra, calculus, eigenvalues, and differential equations.</p>
+            <div class="subject-footer">
+              <span class="subject-count">3 Resources</span>
+              <a href="resources.html?subject=Engineering+Mathematics" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+
+          <!-- Programming / C -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-prog">💻</div>
+            <h3 class="subject-name">Programming / C</h3>
+            <p class="subject-desc">Syntax basics, loops, pointers, memory allocation, arrays and functions.</p>
+            <div class="subject-footer">
+              <span class="subject-count">3 Resources</span>
+              <a href="resources.html?subject=Programming+%2F+C" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+
+          <!-- Electrical Engineering -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-ee">⚡</div>
+            <h3 class="subject-name">Electrical Engineering</h3>
+            <p class="subject-desc">DC circuits, network theorems, Kirchhoff's laws, AC fundamentals and transformers.</p>
+            <div class="subject-footer">
+              <span class="subject-count">3 Resources</span>
+              <a href="resources.html?subject=Electrical+Engineering" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+
+          <!-- Chemistry -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-chem">🧪</div>
+            <h3 class="subject-name">Engineering Chemistry</h3>
+            <p class="subject-desc">Molecular orbital theory, thermodynamics, electrochemistry and polymers.</p>
+            <div class="subject-footer">
+              <span class="subject-count">3 Resources</span>
+              <a href="resources.html?subject=Engineering+Chemistry" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+
+          <!-- Other -->
+          <div class="subject-card">
+            <div class="subject-icon-box icon-other">📖</div>
+            <h3 class="subject-name">General Engineering</h3>
+            <p class="subject-desc">Professional ethics, environmental science, and technical communication.</p>
+            <div class="subject-footer">
+              <span class="subject-count">Open</span>
+              <a href="resources.html" class="btn btn-outline btn-sm">Browse</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Rated Resources Section -->
+      <section style="margin-bottom: 4rem;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⭐ Top Rated Resources</h2>
+            <p class="section-subtitle">Highly praised handouts and video walkthroughs by fellow students</p>
+          </div>
+          <a href="resources.html?sort=rating" class="btn btn-secondary btn-sm">View All &rarr;</a>
+        </div>
+        <div class="resource-grid" id="top-rated-resources-grid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Why StudySphere? Section -->
+      <section style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 3rem 2rem;">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 2.5rem;">
+          <h2 class="section-title">Why StudySphere?</h2>
+          <p class="section-subtitle">Designed for first-year students who need direct access to study materials without clutter</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem;">
+          <div>
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">📑</div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary-color);">Instant PDF Notes</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">View notes directly inside your browser without cumbersome external downloads.</p>
+          </div>
+          <div>
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎥</div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary-color);">Curated Video Lectures</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Embedded video tutorials explaining hard academic concepts step-by-step.</p>
+          </div>
+          <div>
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">📊</div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary-color);">Track Your Progress</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Mark topics as read or completed and see your subject mastery percentage update live.</p>
+          </div>
+          <div>
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🤖</div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary-color);">Study AI Assistant</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Get quick, clear answers to core academic definitions and physics/math concepts.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 0.75rem;">
+            <span class="logo-icon">🎓</span>
+            <span>Study<span>Sphere</span></span>
+          </div>
+          <p style="font-size: 0.875rem; line-height: 1.6; max-width: 320px;">
+            A simple, polished, and practical study-resource platform built for first-year college students.
+          </p>
+          <p style="font-size: 0.8rem; margin-top: 0.75rem; color: var(--text-light);">
+            Tagline: <em>Learn. Explore. Grow.</em>
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="subjects.html">Subjects</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
+            <li><a href="study-ai.html">Study AI Assistant</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Student Portal</h4>
+          <ul>
+            <li><a href="dashboard.html">Student Dashboard</a></li>
+            <li><a href="bookmarks.html">My Bookmarks</a></li>
+            <li><a href="login.html">Demo Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Demo Tech Stack</h4>
+          <ul>
+            <li><span style="color: var(--text-main); font-weight: 600;">HTML5 & CSS3</span></li>
+            <li><span style="color: var(--text-main); font-weight: 600;">Vanilla JavaScript</span></li>
+            <li><span style="color: var(--text-main); font-weight: 600;">Browser localStorage</span></li>
+            <li><span style="color: var(--text-muted); font-size: 0.8rem;">Solo Hackathon Project</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Built for College Hackathon. Free and Open Source.</div>
+        <div>Designed with Vanilla Web Standards</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script>
+    // Initialize Home Page dynamic sections
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Popular resources (top 3 by views)
+      const popularGrid = document.getElementById('popular-resources-grid');
+      if (popularGrid) {
+        const popular = filterResources({ sortBy: 'popular' }).slice(0, 3);
+        popularGrid.innerHTML = popular.map(res => renderResourceCardHtml(res)).join('');
+        attachCardBookmarkListeners(popularGrid);
+      }
+
+      // 2. Top rated resources (top 3 by rating)
+      const topRatedGrid = document.getElementById('top-rated-resources-grid');
+      if (topRatedGrid) {
+        const topRated = filterResources({ sortBy: 'rating' }).slice(0, 3);
+        topRatedGrid.innerHTML = topRated.map(res => renderResourceCardHtml(res)).join('');
+        attachCardBookmarkListeners(topRatedGrid);
+      }
+
+      // 3. Update total resources stat
+      const statCount = document.getElementById('stat-resources-count');
+      if (statCount) {
+        const all = getAllResources();
+        statCount.textContent = `${all.length}+`;
+      }
+    });
+  </script>
+</body>
+</html>

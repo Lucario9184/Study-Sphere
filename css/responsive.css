@@ -1,0 +1,180 @@
+/* ==========================================================================
+   STUDYSPHERE — RESPONSIVE STYLESHEET (responsive.css)
+   Media queries for Laptop, Tablet, and Mobile screens.
+   ========================================================================== */
+
+/* --- TABLET & SMALL LAPTOPS (max-width: 992px) --- */
+@media screen and (max-width: 992px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .viewer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pdf-frame-container {
+    height: 500px;
+  }
+}
+
+/* --- TABLET / MOBILE NAVIGATION (max-width: 768px) --- */
+@media screen and (max-width: 768px) {
+  /* Navigation Collapse */
+  .nav-toggle-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-lg);
+    display: none;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .nav-auth {
+    margin-left: auto;
+    margin-right: 0.75rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 3rem 0 2rem;
+  }
+
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  /* Grid Reductions */
+  .resource-grid,
+  .subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-select {
+    flex: 1;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pdf-frame-container {
+    height: 420px;
+  }
+
+  .chat-window {
+    height: 520px;
+  }
+
+  .chat-message {
+    max-width: 90%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .brand-logo {
+    font-size: 1.15rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .auth-wrapper {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .pdf-frame-container {
+    height: 350px;
+  }
+
+  .modal-content {
+    margin: 0.5rem;
+    max-height: 95vh;
+  }
+
+  #toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+}

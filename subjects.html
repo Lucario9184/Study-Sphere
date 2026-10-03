@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subjects Catalog — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html" class="active">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <main class="main-content">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 2.5rem;">
+        <div>
+          <h1 class="section-title">Academic Subjects</h1>
+          <p class="section-subtitle">Select your course domain to access syllabus-aligned notes and video lectures.</p>
+        </div>
+        <a href="resources.html" class="btn btn-secondary btn-sm">View All Resources &rarr;</a>
+      </div>
+
+      <!-- Subjects Grid -->
+      <div class="subject-grid" id="subjects-container" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Built with HTML5, CSS3 & Vanilla JavaScript</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+  <script>
+    // List of standard subjects with metadata and icons
+    const SUBJECT_DEFINITIONS = [
+      {
+        id: "Engineering Physics",
+        name: "Engineering Physics",
+        icon: "⚛️",
+        iconClass: "icon-physics",
+        description: "Wave mechanics, quantum physics, lasers, fiber optics, and modern physical foundations."
+      },
+      {
+        id: "Engineering Mathematics",
+        name: "Engineering Mathematics",
+        icon: "📐",
+        iconClass: "icon-math",
+        description: "Linear algebra, matrices, rank, eigenvectors, differential equations, and multivariate calculus."
+      },
+      {
+        id: "Programming / C",
+        name: "Programming / C",
+        icon: "💻",
+        iconClass: "icon-prog",
+        description: "C programming fundamentals, pointers, dynamic memory, arrays, control flow, and functions."
+      },
+      {
+        id: "Electrical Engineering",
+        name: "Electrical Engineering",
+        icon: "⚡",
+        iconClass: "icon-ee",
+        description: "DC circuits, Kirchhoff's laws, Thevenin/Norton network theorems, AC circuits, and machines."
+      },
+      {
+        id: "Engineering Chemistry",
+        name: "Engineering Chemistry",
+        icon: "🧪",
+        iconClass: "icon-chem",
+        description: "Chemical bonding, molecular orbital theory, thermodynamics, electrochemistry, and polymers."
+      },
+      {
+        id: "Other",
+        name: "Other / General",
+        icon: "📖",
+        iconClass: "icon-other",
+        description: "General engineering sciences, professional ethics, economics, and technical documentation."
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('subjects-container');
+      if (!container) return;
+
+      const allResources = getAllResources();
+
+      container.innerHTML = SUBJECT_DEFINITIONS.map(subject => {
+        // Find matching resources
+        const matching = allResources.filter(r => r.subject.toLowerCase() === subject.name.toLowerCase());
+        const count = matching.length;
+
+        // Take top 3 titles for preview
+        const previews = matching.slice(0, 3).map(r => `<li>• ${escapeHtml(r.title)}</li>`).join('');
+
+        return `
+          <div class="subject-card">
+            <div class="subject-icon-box ${subject.iconClass}">
+              ${subject.icon}
+            </div>
+            <h3 class="subject-name">${escapeHtml(subject.name)}</h3>
+            <p class="subject-desc">${escapeHtml(subject.description)}</p>
+
+            <!-- Resource Preview List -->
+            <div style="margin: 0.75rem 0 1.25rem; font-size: 0.825rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.75rem; border-radius: var(--radius-sm);">
+              <span style="font-weight: 600; color: var(--secondary-color); display: block; margin-bottom: 0.35rem;">Sample Topics:</span>
+              <ul style="list-style: none; padding-left: 0; line-height: 1.5;">
+                ${previews || '<li>• Diverse topics available</li>'}
+              </ul>
+            </div>
+
+            <div class="subject-footer">
+              <span class="subject-count">${count} ${count === 1 ? 'Resource' : 'Resources'}</span>
+              <a href="resources.html?subject=${encodeURIComponent(subject.name)}" class="btn btn-primary btn-sm">
+                View Resources &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    });
+  </script>
+</body>
+</html>

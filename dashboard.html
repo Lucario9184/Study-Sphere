@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — StudySphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">🎓</span>
+        <span>Study<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle-btn" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="study-ai.html">Study AI 🤖</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-primary btn-sm">Login / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Welcome Header -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="font-size: 0.8rem; font-weight: 700; background: var(--primary-light); color: var(--primary-color); padding: 0.25rem 0.6rem; border-radius: var(--radius-full); text-transform: uppercase;" id="user-role-badge">
+            STUDENT
+          </span>
+          <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--secondary-color); margin-top: 0.4rem;">
+            Welcome back, <span id="user-welcome-name" style="color: var(--primary-color);">Student</span>!
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
+            Here is your personalized academic overview, recently opened notes, and study completion progress.
+          </p>
+        </div>
+        <div>
+          <a href="resources.html" class="btn btn-primary">Find New Study Materials &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Counters -->
+      <div class="stats-cards-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #e0f2fe; color: #0284c7;">👁️</div>
+          <div class="stat-card-info">
+            <h4 id="metric-viewed">0</h4>
+            <p>Recently Viewed</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #fef3c7; color: #d97706;">🔖</div>
+          <div class="stat-card-info">
+            <h4 id="metric-bookmarks">0</h4>
+            <p>Bookmarked Items</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #dcfce7; color: #16a34a;">✅</div>
+          <div class="stat-card-info">
+            <h4 id="metric-completed">0</h4>
+            <p>Topics Completed</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: #ede9fe; color: #7c3aed;">📈</div>
+          <div class="stat-card-info">
+            <h4 id="metric-overall-progress">0%</h4>
+            <p>Overall Curriculum Progress</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout: Left (Continue Learning & Bookmarks) / Right (Subject Progress) -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; margin-bottom: 3.5rem;">
+        
+        <!-- Left Column: Continue Learning & Bookmarks -->
+        <div>
+          
+          <!-- Continue Learning / Recently Viewed -->
+          <div style="margin-bottom: 2.5rem;">
+            <div class="section-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h2 class="section-title" style="font-size: 1.35rem;">⏱️ Continue Learning</h2>
+                <p class="section-subtitle">Your latest 5 opened study resources</p>
+              </div>
+            </div>
+
+            <div class="resource-grid" id="recent-resources-container" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+              <!-- Rendered via js/dashboard.js -->
+            </div>
+
+            <div id="recent-empty" class="empty-state" style="display: none; padding: 2rem;">
+              <div class="empty-state-icon" style="font-size: 2rem;">📖</div>
+              <h4 style="font-size: 1.1rem; font-weight: 700;">No recently viewed materials</h4>
+              <p style="font-size: 0.85rem; margin-bottom: 1rem;">When you open PDF notes or video lectures, they will appear here for fast resumption.</p>
+              <a href="resources.html" class="btn btn-outline btn-sm">Explore Resources</a>
+            </div>
+          </div>
+
+          <!-- Bookmarks Preview -->
+          <div>
+            <div class="section-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h2 class="section-title" style="font-size: 1.35rem;">🔖 My Bookmarks</h2>
+                <p class="section-subtitle">Saved handouts for quick revision</p>
+              </div>
+              <a href="bookmarks.html" class="btn btn-secondary btn-sm">View All Bookmarks &rarr;</a>
+            </div>
+
+            <div class="resource-grid" id="dashboard-bookmarks-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+              <!-- Rendered via js/dashboard.js -->
+            </div>
+
+            <div id="dashboard-bookmarks-empty" class="empty-state" style="display: none; padding: 2rem;">
+              <div class="empty-state-icon" style="font-size: 2rem;">⭐</div>
+              <h4 style="font-size: 1.1rem; font-weight: 700;">No bookmarks saved</h4>
+              <p style="font-size: 0.85rem;">Click the bookmark star on any resource to pin it here.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Subject Progress Tracking -->
+        <div>
+          <div class="sidebar-box">
+            <h4>📊 Subject Progress</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              Track how many topics you've marked as read or completed per course:
+            </p>
+            <div id="subject-progress-container">
+              <!-- Rendered via js/dashboard.js -->
+            </div>
+          </div>
+
+          <!-- Study Tip Box -->
+          <div class="sidebar-box" style="margin-top: 1.5rem; background: var(--primary-light); border-color: var(--primary-border);">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💡</div>
+            <h4 style="color: var(--primary-color); margin-bottom: 0.35rem;">Exam Revision Tip</h4>
+            <p style="font-size: 0.85rem; color: #1e3a8a; line-height: 1.5;">
+              Stuck on physics or calculus definitions? Ask our built-in <strong>Study AI</strong> assistant on the navigation bar for instant explanations!
+            </p>
+            <a href="study-ai.html" class="btn btn-primary btn-sm" style="margin-top: 0.75rem;">Open Study AI</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recommended Resources -->
+      <section>
+        <div class="section-header" style="margin-bottom: 1.25rem;">
+          <div>
+            <h2 class="section-title" style="font-size: 1.35rem;">⭐ Recommended For You</h2>
+            <p class="section-subtitle">Top rated materials with the highest student approval</p>
+          </div>
+          <a href="resources.html?sort=rating" class="btn btn-secondary btn-sm">Explore All &rarr;</a>
+        </div>
+        <div class="resource-grid" id="dashboard-recommended-grid">
+          <!-- Rendered via js/dashboard.js -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 StudySphere — Learn. Explore. Grow.</div>
+        <div>Personalized Student Academic Dashboard</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -113,7 +113,12 @@ where \(R\) is the electrical resistance measured in Ohms (\(\Omega\)).`
  * @returns {string} Response HTML
  */
 function findBestResponse(userText) {
-  const cleanInput = userText.toLowerCase().trim();
+  const cleanInput = (userText || '').toLowerCase().trim();
+
+  // Easter egg: check for supreme leader
+  if (cleanInput.includes("supreme leader")) {
+    return "Mr.Bhavyam is the one and only supreme leader.";
+  }
 
   // Handle common greetings
   if (/^(hi|hello|hey|greetings|help)\b/i.test(cleanInput)) {

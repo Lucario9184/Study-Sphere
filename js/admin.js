@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="empty-state">
             <div class="empty-state-icon">🔒</div>
             <h3>Administrator Access Required</h3>
-            <p>You are currently browsing as a <strong>${user ? user.role : 'Guest'}</strong>. To access the admin panel, please log in using the demo administrator account.</p>
+            <p>You are currently browsing as a <strong>${user ? escapeHtml(user.role) : 'Guest'}</strong>. To access the admin panel, please log in using the demo administrator account.</p>
             <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
               <button class="btn btn-primary" id="btn-quick-admin-login">Switch to Demo Admin</button>
               <a href="dashboard.html" class="btn btn-secondary">Go to Student Dashboard</a>
@@ -117,12 +117,12 @@ function renderResourceTable(resources) {
           ⭐ ${(res.rating || 0).toFixed(1)} <span style="font-size: 0.8rem; color: var(--text-light);">(${res.ratingCount || 0})</span>
         </td>
         <td>${res.views || 0}</td>
-        <td style="font-size: 0.8rem; color: var(--text-muted);">${res.date || 'N/A'}</td>
+        <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(res.date || 'N/A')}</td>
         <td>
           <div style="display: flex; gap: 0.4rem;">
-            <a href="resource.html?id=${res.id}" class="btn btn-outline btn-sm" title="View in browser">👁️ View</a>
-            <button class="btn btn-secondary btn-sm btn-edit-res" data-id="${res.id}" title="Edit resource">✏️ Edit</button>
-            <button class="btn btn-danger btn-sm btn-delete-res" data-id="${res.id}" title="Delete resource">🗑️</button>
+            <a href="resource.html?id=${encodeURIComponent(res.id)}" class="btn btn-outline btn-sm" title="View in browser">👁️ View</a>
+            <button class="btn btn-secondary btn-sm btn-edit-res" data-id="${escapeHtml(res.id)}" title="Edit resource">✏️ Edit</button>
+            <button class="btn btn-danger btn-sm btn-delete-res" data-id="${escapeHtml(res.id)}" title="Delete resource">🗑️</button>
           </div>
         </td>
       </tr>

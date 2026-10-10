@@ -745,7 +745,8 @@ button, input, select, textarea {
 }
 
 /* --- 12. RESOURCE VIEWER & EMBEDS --- */
-.viewer-layout {
+.viewer-layout,
+.dashboard-layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;

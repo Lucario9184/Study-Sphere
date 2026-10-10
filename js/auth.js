@@ -36,10 +36,27 @@ function initUsersStorage() {
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(DEFAULT_DEMO_USERS));
   }
 
-  // Set default current user to demo student if none logged in yet
-  if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER)) {
-    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(DEFAULT_DEMO_USERS[0]));
+  // Seed default demo session only on the very first visit
+  const sessionSeeded = localStorage.getItem('studysphere_session_seeded');
+  if (!sessionSeeded) {
+    if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER)) {
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(DEFAULT_DEMO_USERS[0]));
+    }
+    localStorage.setItem('studysphere_session_seeded', 'true');
   }
+}
+
+/**
+ * Logs out the current user and redirects to login.html
+ */
+function logoutUser() {
+  localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+  if (typeof showToast === 'function') {
+    showToast('Logged out successfully', 'info');
+  }
+  setTimeout(() => {
+    window.location.href = 'login.html';
+  }, 600);
 }
 
 /**

@@ -12,8 +12,24 @@ const STORAGE_KEYS = {
   BOOKMARKS: 'studysphere_bookmarks',
   RATINGS: 'studysphere_ratings',
   PROGRESS: 'studysphere_progress',
-  RECENTLY_VIEWED: 'studysphere_recent'
+  RECENTLY_VIEWED: 'studysphere_recent',
+  SESSION_SEEDED: 'studysphere_session_seeded'
 };
+
+// Seed default demo user session only on the very first visit
+(function initDefaultSession() {
+  const sessionSeeded = localStorage.getItem('studysphere_session_seeded');
+  if (!sessionSeeded) {
+    if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER)) {
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify({
+        name: "Alex Johnson",
+        email: "student@example.com",
+        role: "student"
+      }));
+    }
+    localStorage.setItem('studysphere_session_seeded', 'true');
+  }
+})();
 
 /**
  * Retrieves the current logged in user from localStorage

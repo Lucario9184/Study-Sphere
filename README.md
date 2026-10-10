@@ -1,6 +1,6 @@
 # 🎓 StudySphere — Learn. Explore. Grow.
 
-> **A polished, practical study-resource platform built as a solo first-year college hackathon project.**
+> **A polished, practical study-resource platform built by a 5-member team of 1st year college students for a college hackathon project.**
 
 ---
 
@@ -9,7 +9,7 @@
 **StudySphere** is a centralized academic study-resource website tailored for first-year college engineering students. It allows students to browse verified syllabus notes, open inline PDF handouts, watch curated video lectures, rate materials, bookmark resources for exams, track subject completion progress, and interact with an offline AI study assistant.
 
 > **Hackathon Prototype Notice:**  
-> StudySphere is a frontend-only educational platform prototype created using **HTML5, CSS3, and Vanilla JavaScript**. It requires zero external backends, no cloud databases, and no API keys. All state is maintained locally in the browser using the Web Storage API (`localStorage`).
+> StudySphere is a frontend-only educational platform prototype created by a 5-member team of 1st year college students using **HTML5, CSS3, and Vanilla JavaScript**. It requires zero external backends, no cloud databases, and no API keys. All state is maintained locally in the browser using the Web Storage API (`localStorage`).
 
 ---
 
@@ -46,10 +46,10 @@
 
 Strictly compliant with hackathon beginner development rules:
 
-* **HTML5**: Semantic document layout (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`).
-* **CSS3**: Custom design system using CSS variables, Flexbox, CSS Grid, animations, and media queries (`css/style.css` and `css/responsive.css`). Zero CSS frameworks.
-* **Vanilla JavaScript (ES6+)**: Pure DOM manipulation, array filtering/sorting algorithms, and event handling. No external JS libraries.
-* **Browser Storage**: `localStorage` for all state persistence.
+- **HTML5**: Semantic document layout (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`).
+- **CSS3**: Custom design system using CSS variables, Flexbox, CSS Grid, animations, and media queries (`css/style.css` and `css/responsive.css`). Zero CSS frameworks.
+- **Vanilla JavaScript (ES6+)**: Pure DOM manipulation, array filtering/sorting algorithms, and event handling. No external JS libraries.
+- **Browser Storage**: `localStorage` for all state persistence.
 
 ---
 
@@ -95,15 +95,20 @@ StudySphere/
 Since StudySphere is built with pure web standards, no build tools, npm packages, or compilers are required.
 
 ### Method 1: Direct File Opening
+
 1. Double-click `index.html` in your file explorer or open it directly in Google Chrome, Safari, Firefox, or Edge.
 
 ### Method 2: Local Python Server (Recommended for iframes)
+
 If you prefer running via a local web server:
+
 ```bash
 # From the project root directory
 python3 -m http.server 8000
 ```
+
 Then navigate to:
+
 ```
 http://localhost:8000
 ```
@@ -114,10 +119,10 @@ http://localhost:8000
 
 Pre-configured demo credentials are provided on `login.html` with **1-click quick-fill buttons**:
 
-| Account Type | Email | Password | Access Level |
-| :--- | :--- | :--- | :--- |
-| **Demo Student** | `student@example.com` | `student123` | Student Dashboard, Bookmarks, Ratings, Progress |
-| **Demo Admin** | `admin@studysphere.edu` | `admin123` | Full Access + Admin Console (Add, Edit, Delete) |
+| Account Type     | Email                   | Password     | Access Level                                    |
+| :--------------- | :---------------------- | :----------- | :---------------------------------------------- |
+| **Demo Student** | `student@example.com`   | `student123` | Student Dashboard, Bookmarks, Ratings, Progress |
+| **Demo Admin**   | `admin@studysphere.edu` | `admin123`   | Full Access + Admin Console (Add, Edit, Delete) |
 
 ---
 
@@ -146,34 +151,34 @@ All platform state persists under specific namespaces:
 
 When explaining the code to judges, refer to these straightforward workflows:
 
-* **Search & Multi-Filtering (`js/resources.js` -> `filterResources()`):**  
-  *Takes user search text and dropdown selections, filters the resource array across title, subject, unit, and tags, applies sort orders, and generates cards dynamically.*
-* **Bookmark System (`js/bookmarks.js` -> `toggleBookmark()`):**  
-  *Reads bookmark array from `localStorage`, checks for existence, pushes or splices the ID, updates the UI, and displays an informative toast notification.*
-* **Star Ratings (`js/ratings.js` -> `submitRating()`):**  
-  *Records the rating under the user's key in a nested object, computes the new mathematical mean, updates the resource count, and synchronizes the card.*
-* **Subject Progress Calculation (`js/progress.js` -> `getSubjectProgress()`):**  
-  *Compares the total number of resources in a subject against the count of marked completions in `localStorage` to compute an exact percentage `(completed / total) * 100`.*
-* **Study AI (`js/study-ai.js` -> `findBestResponse()`):**  
-  *Extracts keywords from the student's prompt, matches them against a curated academic knowledge base, and renders a structured explanation with a simulated typing delay.*
+- **Search & Multi-Filtering (`js/resources.js` -> `filterResources()`):**  
+  _Takes user search text and dropdown selections, filters the resource array across title, subject, unit, and tags, applies sort orders, and generates cards dynamically._
+- **Bookmark System (`js/bookmarks.js` -> `toggleBookmark()`):**  
+  _Reads bookmark array from `localStorage`, checks for existence, pushes or splices the ID, updates the UI, and displays an informative toast notification._
+- **Star Ratings (`js/ratings.js` -> `submitRating()`):**  
+  _Records the rating under the user's key in a nested object, computes the new mathematical mean, updates the resource count, and synchronizes the card._
+- **Subject Progress Calculation (`js/progress.js` -> `getSubjectProgress()`):**  
+  _Compares the total number of resources in a subject against the count of marked completions in `localStorage` to compute an exact percentage `(completed / total) _ 100`.\*
+- **Study AI (`js/study-ai.js` -> `findBestResponse()`):**  
+  _Extracts keywords from the student's prompt, matches them against a curated academic knowledge base, and renders a structured explanation with a simulated typing delay._
 
 ---
 
 ## ⚠️ Prototype Limitations
 
-* **No Backend Server**: Data is isolated to the user's current browser and device.
-* **Demo Authentication**: Passwords and sessions are held in `localStorage` for demonstration purposes and are not encrypted for production security.
-* **File Uploads**: Admin uploaded files reference local browser assets rather than a cloud storage bucket.
+- **No Backend Server**: Data is isolated to the user's current browser and device.
+- **Demo Authentication**: Passwords and sessions are held in `localStorage` for demonstration purposes and are not encrypted for production security.
+- **File Uploads**: Admin uploaded files reference local browser assets rather than a cloud storage bucket.
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Integration with a production backend (Node.js/Express or Python/FastAPI) and PostgreSQL database.
-* JWT authentication with encrypted passwords and college single sign-on (SSO).
-* Cloud object storage (AWS S3 or Google Cloud Storage) for user-uploaded study notes.
-* Real-time student study groups and collaborative annotation on PDF notes.
-* Live LLM integration for the Study AI assistant with context awareness of uploaded notes.
+- Integration with a production backend (Node.js/Express or Python/FastAPI) and PostgreSQL database.
+- JWT authentication with encrypted passwords and college single sign-on (SSO).
+- Cloud object storage (AWS S3 or Google Cloud Storage) for user-uploaded study notes.
+- Real-time student study groups and collaborative annotation on PDF notes.
+- Live LLM integration for the Study AI assistant with context awareness of uploaded notes.
 
 ---
 

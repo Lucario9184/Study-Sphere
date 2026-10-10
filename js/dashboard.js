@@ -62,16 +62,15 @@ function renderOverviewMetrics() {
 }
 
 /**
- * Fetches recently viewed array from localStorage
+ * Fetches recently viewed array for the current user
  * @returns {Array<{id: string, viewedAt: string}>}
  */
 function getRecentlyViewedItems() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEYS.RECENTLY_VIEWED);
-    return raw ? JSON.parse(raw) : [];
-  } catch (e) {
-    return [];
-  }
+  const email = getCurrentUserEmail();
+  if (!email) return [];
+  const store = typeof getRecentlyViewedStore === 'function' ? getRecentlyViewedStore() : {};
+  const userRecent = store[email];
+  return Array.isArray(userRecent) ? userRecent : [];
 }
 
 /**

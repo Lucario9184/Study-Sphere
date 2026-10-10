@@ -273,6 +273,59 @@ function getResourceById(id) {
 }
 
 /**
+ * Loads recently viewed dictionary from localStorage and migrates if needed
+ * @returns {Object} { [userEmail]: Array<{id: string, viewedAt: string}> }
+ */
+function getRecentlyViewedStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.RECENTLY_VIEWED);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      // Old global format: array of items. Migrate to current user bucket.
+      const email = getCurrentUserEmail();
+      if (email) {
+        const migrated = { [email]: parsed };
+        localStorage.setItem(STORAGE_KEYS.RECENTLY_VIEWED, JSON.stringify(migrated));
+        return migrated;
+      }
+      return {};
+    }
+    if (parsed && typeof parsed === 'object') {
+      return parsed;
+    }
+    return {};
+  } catch (e) {
+    console.error("Error reading recently viewed store:", e);
+    return {};
+  }
+}
+
+/**
+ * Fetches recently viewed array for the current user
+ * @returns {Array<{id: string, viewedAt: string}>}
+ */
+function getRecentlyViewedItems() {
+  const email = getCurrentUserEmail();
+  if (!email) return [];
+  const store = getRecentlyViewedStore();
+  const userRecent = store[email];
+  return Array.isArray(userRecent) ? userRecent : [];
+}
+
+/**
+ * Saves recently viewed array for the current user
+ * @param {Array<{id: string, viewedAt: string}>} items
+ */
+function saveRecentlyViewedItems(items) {
+  const email = getCurrentUserEmail();
+  if (!email) return; // never write to a shared bucket if no user
+  const store = getRecentlyViewedStore();
+  store[email] = Array.isArray(items) ? items : [];
+  localStorage.setItem(STORAGE_KEYS.RECENTLY_VIEWED, JSON.stringify(store));
+}
+
+/**
  * Increments the view count of a resource and records view date
  * @param {string} id
  */
@@ -284,9 +337,12 @@ function trackResourceView(id) {
     saveAllResources(all);
   }
 
-  // Also add to recently viewed list (max 5 items)
+  // Also add to recently viewed list (max 5 items) for current user
+  const email = getCurrentUserEmail();
+  if (!email) return;
+
   try {
-    let recent = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECENTLY_VIEWED) || '[]');
+    let recent = getRecentlyViewedItems();
     // Remove if already in list to put it at the very top
     recent = recent.filter(item => item.id !== id);
     recent.unshift({
@@ -297,7 +353,7 @@ function trackResourceView(id) {
     if (recent.length > 5) {
       recent = recent.slice(0, 5);
     }
-    localStorage.setItem(STORAGE_KEYS.RECENTLY_VIEWED, JSON.stringify(recent));
+    saveRecentlyViewedItems(recent);
   } catch (e) {
     console.warn("Could not record recently viewed item:", e);
   }
@@ -382,12 +438,10 @@ function filterResources({ query = '', subject = 'All', type = 'All', minRating 
  * @returns {boolean}
  */
 function isResourceBookmarked(resourceId) {
-  try {
-    const bookmarks = JSON.parse(localStorage.getItem(STORAGE_KEYS.BOOKMARKS) || '[]');
-    return bookmarks.includes(resourceId);
-  } catch (e) {
-    return false;
+  if (typeof getBookmarkedIds === 'function') {
+    return getBookmarkedIds().includes(resourceId);
   }
+  return false;
 }
 
 /**

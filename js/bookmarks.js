@@ -5,25 +5,56 @@
  */
 
 /**
- * Returns array of bookmarked resource IDs
- * @returns {Array<string>}
+ * Loads entire bookmarks dictionary from localStorage and migrates if needed
+ * @returns {Object} { [userEmail]: Array<string> }
  */
-function getBookmarkedIds() {
+function getBookmarksStore() {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      // Old global format: array of resource IDs. Migrate to current user bucket.
+      const email = getCurrentUserEmail();
+      if (email) {
+        const migrated = { [email]: parsed };
+        localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(migrated));
+        return migrated;
+      }
+      return {};
+    }
+    if (parsed && typeof parsed === 'object') {
+      return parsed;
+    }
+    return {};
   } catch (e) {
-    console.error("Error reading bookmarks:", e);
-    return [];
+    console.error("Error reading bookmarks store:", e);
+    return {};
   }
 }
 
 /**
- * Saves array of bookmark IDs to localStorage
+ * Returns array of bookmarked resource IDs for the current user
+ * @returns {Array<string>}
+ */
+function getBookmarkedIds() {
+  const email = getCurrentUserEmail();
+  if (!email) return [];
+  const store = getBookmarksStore();
+  const userBookmarks = store[email];
+  return Array.isArray(userBookmarks) ? userBookmarks : [];
+}
+
+/**
+ * Saves array of bookmark IDs for the current user to localStorage
  * @param {Array<string>} ids
  */
 function saveBookmarkedIds(ids) {
-  localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(ids));
+  const email = getCurrentUserEmail();
+  if (!email) return; // never write to a shared bucket if no user
+  const store = getBookmarksStore();
+  store[email] = Array.isArray(ids) ? ids : [];
+  localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(store));
 }
 
 /**
@@ -32,6 +63,12 @@ function saveBookmarkedIds(ids) {
  * @param {Function} [onToggle] - Callback receiving (isBookmarked)
  */
 function toggleBookmark(resourceId, onToggle) {
+  const email = getCurrentUserEmail();
+  if (!email) {
+    showToast('Please login to bookmark resources', 'info');
+    return;
+  }
+
   let bookmarks = getBookmarkedIds();
   const index = bookmarks.indexOf(resourceId);
   let isNowBookmarked = false;

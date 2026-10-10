@@ -37,7 +37,7 @@ function saveAllRatings(ratings) {
  */
 function getActiveUserId() {
   const user = getCurrentUser();
-  return user ? user.email : 'guest_student';
+  return (user && user.email) ? user.email.toLowerCase() : 'guest_student';
 }
 
 /**

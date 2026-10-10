@@ -108,10 +108,9 @@ function loginUser(email, password) {
  * @param {string} name 
  * @param {string} email 
  * @param {string} password 
- * @param {string} role - 'student' or 'admin'
  * @returns {{success: boolean, message: string}}
  */
-function registerUser(name, email, password, role = 'student') {
+function registerUser(name, email, password) {
   if (!name.trim() || !email.trim() || !password.trim()) {
     return { success: false, message: "Please fill in all required fields." };
   }
@@ -127,7 +126,7 @@ function registerUser(name, email, password, role = 'student') {
     name: name.trim(),
     email: cleanEmail,
     password: password,
-    role: role,
+    role: 'student',
     createdAt: new Date().toISOString().split('T')[0]
   };
 

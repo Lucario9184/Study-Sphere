@@ -70,7 +70,13 @@ function refreshAdminDashboard() {
   }
 
   // Completed items
-  const totalCompleted = Object.keys(progress).length;
+  let totalCompleted = 0;
+  const progressStore = typeof getProgressStore === 'function' ? getProgressStore() : {};
+  Object.values(progressStore).forEach(userProg => {
+    if (userProg && typeof userProg === 'object') {
+      totalCompleted += Object.keys(userProg).length;
+    }
+  });
 
   document.getElementById('admin-total-resources').textContent = all.length;
   document.getElementById('admin-total-views').textContent = totalViews;

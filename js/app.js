@@ -46,6 +46,15 @@ function getCurrentUser() {
 }
 
 /**
+ * Retrieves the current logged in user's email in lowercase, or null if logged out
+ * @returns {string|null}
+ */
+function getCurrentUserEmail() {
+  const user = getCurrentUser();
+  return (user && user.email) ? user.email.trim().toLowerCase() : null;
+}
+
+/**
  * Checks if current user is an admin
  * @returns {boolean}
  */

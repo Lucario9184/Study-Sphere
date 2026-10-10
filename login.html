@@ -40,11 +40,6 @@
       
       <div class="auth-wrapper">
         
-        <!-- Hackathon Context Banner -->
-        <div class="alert-banner">
-          <span>ℹ️</span>
-          <span><strong>Hackathon Demo Auth:</strong> Uses local browser storage. No real backend required.</span>
-        </div>
 
         <!-- Auth Tabs (Login vs Register) -->
         <div class="auth-tabs">
@@ -86,13 +81,6 @@
             <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
           </div>
 
-          <div class="form-group">
-            <label for="reg-role">Account Type (Demo)</label>
-            <select id="reg-role" class="form-control">
-              <option value="student">Student Account</option>
-              <option value="admin">Administrator / Faculty</option>
-            </select>
-          </div>
 
           <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
             Register Demo Account
@@ -194,17 +182,12 @@
       const name = document.getElementById('reg-name').value;
       const email = document.getElementById('reg-email').value;
       const pass = document.getElementById('reg-password').value;
-      const role = document.getElementById('reg-role').value;
 
-      const res = registerUser(name, email, pass, role);
+      const res = registerUser(name, email, pass);
       if (res.success) {
         showToast(res.message, 'success');
         setTimeout(() => {
-          if (role === 'admin') {
-            window.location.href = 'admin.html';
-          } else {
-            window.location.href = 'dashboard.html';
-          }
+          window.location.href = 'dashboard.html';
         }, 800);
       } else {
         showToast(res.message, 'error');
